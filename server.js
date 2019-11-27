@@ -1,32 +1,37 @@
 const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
+const cors = require('cors');
 
 const app = express();
 
 // app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cors());
 
 const database = {
   users: [
     {
       id: '123',
       name: 'orxan',
-      email: 'orxan@gmail.com',
-      password: '12345',
-      entries: 0
+      email: 'abdullabashir@gmail.com',
+      password: 'abdullabashir',
+      entries: 0,
+      joined: new Date()
     },
     {
       id: '125',
       name: 'abdulla',
       email: 'abdulla@gmail.com',
       password: '123456',
-      entries: 0
+      entries: 0,
+      joined: new Date()
     }
   ]
 };
 
 app.get('/', (req, res) => {
   res.send(database.users);
+  // console.log(database.users);
 });
 app.get('/profile/:id', (req, res) => {
   const { id } = req.params;
@@ -59,12 +64,16 @@ app.post('/image', (req, res) => {
 });
 
 app.post('/signin', (req, res) => {
-  bcrypt.compare("123456", '$2a$10$l3cLE1BTQeR2ocG825bzdO0.l8B0ROoGBgQfexusheN1o3J8CvAj2', function(err, res) {
-    console.log('1', res)
-});
-// bcrypt.compare("veggies", hash, function(err, res) {
-//     // res = false
-// });
+  // bcrypt.compare(
+  //   '123456',
+  //   '$2a$10$l3cLE1BTQeR2ocG825bzdO0.l8B0ROoGBgQfexusheN1o3J8CvAj2',
+  //   function(err, res) {
+  //     console.log('1', res);
+  //   }
+  // );
+  // bcrypt.compare("veggies", hash, function(err, res) {
+  //     // res = false
+  // });
   if (
     req.body.email === database.users[1].email &&
     req.body.password === database.users[1].password
@@ -84,13 +93,14 @@ app.post('/register', (req, res) => {
     id: '125',
     name: name,
     email: email,
-    password: password
+    entries: 0,
+    joined: new Date()
   });
   res.json(database.users[database.users.length - 1]);
 });
 
-app.listen(3000, () => {
-  console.log('app is runing on port 3000');
+app.listen(3001, () => {
+  console.log('app is runing on port 3001');
 });
 
 //  res = this is working /
