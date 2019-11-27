@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcrypt-nodejs');
 
 const app = express();
 
@@ -58,6 +59,12 @@ app.post('/image', (req, res) => {
 });
 
 app.post('/signin', (req, res) => {
+  bcrypt.compare("123456", '$2a$10$l3cLE1BTQeR2ocG825bzdO0.l8B0ROoGBgQfexusheN1o3J8CvAj2', function(err, res) {
+    console.log('1', res)
+});
+// bcrypt.compare("veggies", hash, function(err, res) {
+//     // res = false
+// });
   if (
     req.body.email === database.users[1].email &&
     req.body.password === database.users[1].password
@@ -70,6 +77,9 @@ app.post('/signin', (req, res) => {
 
 app.post('/register', (req, res) => {
   const { name, password, email } = req.body;
+  bcrypt.hash(password, null, null, function(err, hash) {
+    console.log(hash);
+  });
   database.users.push({
     id: '125',
     name: name,
