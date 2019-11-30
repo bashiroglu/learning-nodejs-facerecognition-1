@@ -38,6 +38,8 @@ app.get('/profile/:id', (req, res) => {
         res.status(400).json('could not found');
       }
     })
+    // .catch(err => res.status(400))
+    // .json('error getting user');
     .catch(err => res.status(400).json('error getting user'));
 });
 
