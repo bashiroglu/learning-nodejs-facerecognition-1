@@ -27,7 +27,8 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req, res) => {
-  res.send(database.users);
+  res.send('database.users');
+  // res.send(database.users);
   // console.log(database.users);
 });
 app.get('/profile/:id', (req, res) => {
@@ -49,6 +50,6 @@ app.post('/register', (req, res) => {
   register.handleRegister(req, res, db, bcrypt);
 });
 
-app.listen(3001, () => {
-  console.log('app is runing on port 3001');
+app.listen(process.env.PORT || 3001, () => {
+  console.log(`app is runing on port${process.env.PORT}`);
 });
